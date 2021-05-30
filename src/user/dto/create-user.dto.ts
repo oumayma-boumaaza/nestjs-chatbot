@@ -1,0 +1,39 @@
+import{IsIn,IsEmail,Matches, IsString,IsNotEmpty, IsDate, IsNumber} from 'class-validator';
+export class CreateUserDto{
+    @IsNotEmpty()
+    @IsString()
+    firstName:string;
+    @IsNotEmpty()
+    @IsString()
+    lastName:string;
+    @IsNotEmpty()
+    @IsString()
+     @IsEmail()
+     @Matches(/^[a-z0-9](\.?[a-z0-9]){5,}@oncf\.ma$/)
+    mail:string;
+    @IsNotEmpty()
+    @IsString()
+    @IsIn(['femme','homme'])
+    sexe:string;
+    @IsNotEmpty()
+    @IsString()
+    matricule:string;
+    @IsNotEmpty()
+    @IsDate()
+    birthday:Date;
+    @IsNotEmpty()
+    @IsString()
+    cin:string;
+    @IsNotEmpty()
+    @IsString()
+    occupation:string;
+    @IsNotEmpty()
+    @IsString()
+    adress:string;
+    @IsNotEmpty()
+    @IsNumber()
+    tel:number;
+    @IsIn(['Admin','Employee'])
+    @IsString()
+    role:string;
+}

@@ -4,7 +4,7 @@ export const typeOrmConfig:TypeOrmModuleOptions={
     host:'localhost',
     port:5432,
     username:'postgres',
-    password:'password',
+    password:'admin',
     database:'chatbot',
     autoLoadEntities:true,
     synchronize:true,

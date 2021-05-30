@@ -20,9 +20,25 @@ export abstract class User extends BaseEntity {
   @Column()
   password: string;
   @Column()
+  salt:string;
+  @Column()
   firstName: string;
   @Column()
   lastName: string;
+  @Column()
+  sexe:string;
+  @Column()
+  matricule:string;
+  @Column()
+  birthday:Date;
+  @Column()
+  cin:string;
+  @Column()
+  occupation:string;
+  @Column()
+  adress:string;
+  @Column()
+  tel:number;
 }
 @ChildEntity()
 export class Admin extends User {}
