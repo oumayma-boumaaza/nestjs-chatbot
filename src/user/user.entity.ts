@@ -8,9 +8,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   TableInheritance,
+  Unique,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
+@Unique(['mail'])
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export abstract class User extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -38,7 +41,12 @@ export abstract class User extends BaseEntity {
   @Column()
   adress:string;
   @Column()
-  tel:number;
+  tel:string;
+
+  async validatePassword(password:string):Promise<boolean>{
+    const hash = await bcrypt.hash(password,this.salt);
+    return hash===this.password;
+   }
 }
 @ChildEntity()
 export class Admin extends User {}
@@ -48,3 +56,4 @@ export class Employee extends User {
   @JoinColumn()
   conversation: Conversation;
 }
+

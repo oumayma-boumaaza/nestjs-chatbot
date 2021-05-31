@@ -1,4 +1,5 @@
-import{IsIn,IsEmail,Matches, IsString,IsNotEmpty, IsDate, IsNumber} from 'class-validator';
+import { Type } from 'class-transformer';
+import{IsIn,IsEmail,Matches, IsString,IsNotEmpty, IsDate, IsNumber, IsPhoneNumber} from 'class-validator';
 export class CreateUserDto{
     @IsNotEmpty()
     @IsString()
@@ -9,7 +10,7 @@ export class CreateUserDto{
     @IsNotEmpty()
     @IsString()
      @IsEmail()
-     @Matches(/^[a-z0-9](\.?[a-z0-9]){5,}@oncf\.ma$/)
+     @Matches(/^\w+([\.-]?\w+)*@oncf\.ma$/)
     mail:string;
     @IsNotEmpty()
     @IsString()
@@ -19,8 +20,9 @@ export class CreateUserDto{
     @IsString()
     matricule:string;
     @IsNotEmpty()
+    @Type(() => Date)
     @IsDate()
-    birthday:Date;
+    readonly birthday:Date;
     @IsNotEmpty()
     @IsString()
     cin:string;
@@ -31,9 +33,10 @@ export class CreateUserDto{
     @IsString()
     adress:string;
     @IsNotEmpty()
-    @IsNumber()
-    tel:number;
+    @IsPhoneNumber('MA')
+    tel:string;
     @IsIn(['Admin','Employee'])
     @IsString()
     role:string;
+
 }
