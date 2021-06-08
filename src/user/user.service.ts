@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -8,6 +8,11 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-payload.interface';
 @Injectable()
 export class UserService {
+     async  getUser(id: number) {
+     const user= await this.userRepository.findOne(id);
+     if(!user) throw new NotFoundException(' il n existe aucun utilisateur avec l id: '+ id);
+     return user;
+    }
     constructor(@InjectRepository(UserRepository)
     private userRepository:UserRepository,
     private jwtService:JwtService,

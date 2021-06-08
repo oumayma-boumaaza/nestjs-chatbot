@@ -1,4 +1,4 @@
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 // import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -9,7 +9,7 @@ import { Hash } from 'crypto';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const { firstName, lastName, mail, sexe, matricule, birthday, cin, occupation, adress, tel, role } = createUserDto;
+    const { firstName, lastName, mail, sexe, matricule, birthday, cin, occupation, adress, tel, role,avatar } = createUserDto;
     let user;
     if (role === "Admin") {
       user = new Admin();
@@ -23,10 +23,11 @@ export class UserRepository extends Repository<User> {
     user.matricule = matricule;
     user.birthday = birthday;
     user.cin = cin;
+    user.avatar=Buffer.from(avatar).toString('base64');
     user.occupation = occupation;
     user.adress = adress;
     user.tel = tel;
-    let pswrd=user.cin+'@'+lastName;
+    let pswrd="A@123456";
     user.salt= await bcrypt.genSalt();
     user.password= await this.hashPassword(pswrd,user.salt);
     //console.log(pswrd);
@@ -34,10 +35,11 @@ export class UserRepository extends Repository<User> {
         return  await user.save();       
       }
       catch(error){
-    if(error.code ==='23505'){//duplicate username
+    if(error.errno ===1062){//duplicate username
+      
        throw new ConflictException('Il existe deja un utilisateur avec cette adresse mail');
       }
-  
+      throw new InternalServerErrorException('Error');
 } 
 }
 async validateUserPassword(authCredentialsDto:AuthCredentialsDto):Promise<string>{

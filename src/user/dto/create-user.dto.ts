@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import{IsIn,IsEmail,Matches, IsString,IsNotEmpty, IsDate, IsNumber, IsPhoneNumber} from 'class-validator';
+import{IsIn,IsEmail,Matches, IsString,IsNotEmpty, IsDate, IsNumber, IsPhoneNumber, IsBase64} from 'class-validator';
 export class CreateUserDto{
     @IsNotEmpty()
     @IsString()
@@ -38,5 +38,7 @@ export class CreateUserDto{
     @IsIn(['Admin','Employee'])
     @IsString()
     role:string;
+    @IsString()
+    avatar:string;
 
 }

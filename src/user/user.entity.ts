@@ -8,40 +8,55 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   TableInheritance,
-  Unique,
+ 
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Entity()
-@Unique(['mail'])
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export abstract class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   UserId: number;
-  @Column()
+
+  @Column({unique:true})
   mail: string;
+
   @Column()
   password: string;
+
   @Column()
   salt:string;
+
   @Column()
   firstName: string;
+  
   @Column()
   lastName: string;
+
   @Column()
   sexe:string;
+
   @Column()
   matricule:string;
+
   @Column()
   birthday:Date;
+
   @Column()
   cin:string;
+
   @Column()
   occupation:string;
+
   @Column()
   adress:string;
+
   @Column()
   tel:string;
+
+  @Column({type:'longtext'})
+  
+  avatar:string;
 
   async validatePassword(password:string):Promise<boolean>{
     const hash = await bcrypt.hash(password,this.salt);
