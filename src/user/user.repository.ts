@@ -6,6 +6,7 @@ import { Admin, Employee, User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { Hash } from 'crypto';
+import { JwtPayload } from './jwt-payload.interface';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -42,11 +43,18 @@ export class UserRepository extends Repository<User> {
       throw new InternalServerErrorException('Error');
 } 
 }
-async validateUserPassword(authCredentialsDto:AuthCredentialsDto):Promise<string>{
+async validateUserPassword(authCredentialsDto:AuthCredentialsDto):Promise<JwtPayload>{
+  
   const {mail,password}=authCredentialsDto;
   const user=await this.findOne({mail});
   if(user && await user.validatePassword(password)){
-  return user.mail;
+    let role:string =typeof user;
+  return {
+    mail:user.mail,
+    id:user.UserId,
+    lastName:user.lastName,
+    firstName:user.firstName,
+    role};
   }
   else 
   {

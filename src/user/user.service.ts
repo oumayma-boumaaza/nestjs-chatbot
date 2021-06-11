@@ -22,12 +22,12 @@ export class UserService {
      return await this.userRepository.createUser(createUserDto);
     }
     async signIn(authCredentialsDto:AuthCredentialsDto) :Promise<{accessToken:string}>{
-        const mail= await this.userRepository.validateUserPassword(authCredentialsDto);
+        const payload:JwtPayload = await this.userRepository.validateUserPassword(authCredentialsDto);
         
-        if(!mail){
+        if(!payload){
         throw new UnauthorizedException('Invalid Credentials');
         }
-        const payload:JwtPayload = {mail};
+       // const payload:JwtPayload = {mail};
         const accessToken= await this.jwtService.sign(payload);
         return{accessToken};
         }

@@ -57,6 +57,7 @@ export abstract class User extends BaseEntity {
   @Column({type:'longtext'})
   
   avatar:string;
+  id: string;
 
   async validatePassword(password:string):Promise<boolean>{
     const hash = await bcrypt.hash(password,this.salt);
