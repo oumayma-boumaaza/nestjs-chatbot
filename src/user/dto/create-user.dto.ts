@@ -22,7 +22,7 @@ export class CreateUserDto{
     @IsNotEmpty()
     @Type(() => Date)
     @IsDate()
-    readonly birthday:Date;
+    birthday:Date;
     @IsNotEmpty()
     @IsString()
     cin:string;
@@ -33,7 +33,6 @@ export class CreateUserDto{
     @IsString()
     adress:string;
     @IsNotEmpty()
-    @IsPhoneNumber('MA')
     tel:string;
     @IsIn(['Admin','Employee'])
     @IsString()

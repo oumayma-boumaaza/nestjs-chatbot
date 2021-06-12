@@ -23,3 +23,4 @@ const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
   providers: [UserService],
 })
 export class UserModule {}
+
