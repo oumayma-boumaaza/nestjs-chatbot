@@ -32,5 +32,14 @@ export class UserService {
         return{accessToken};
         }
         
+    async changePassword(oldPassword:string,newPassword:string,user:User){
+       const result =user.validatePassword(newPassword);
+       if(!result){
+        throw new UnauthorizedException('mot de pss incorrecte');
+        }else {
+           
+
+        }
+    }
 }
 
