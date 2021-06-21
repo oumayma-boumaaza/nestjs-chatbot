@@ -8,7 +8,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   TableInheritance,
- 
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
@@ -18,51 +17,49 @@ export abstract class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   UserId: number;
 
-  @Column({unique:true})
+  @Column({ unique: true })
   mail: string;
 
   @Column()
   password: string;
 
   @Column()
-  salt:string;
+  salt: string;
 
   @Column()
   firstName: string;
-  
+
   @Column()
   lastName: string;
 
   @Column()
-  sexe:string;
+  sexe: string;
 
   @Column()
-  matricule:string;
+  matricule: string;
 
   @Column()
-  birthday:Date;
+  birthday: Date;
 
   @Column()
-  cin:string;
+  cin: string;
 
   @Column()
-  occupation:string;
+  occupation: string;
 
   @Column()
-  adress:string;
+  adress: string;
 
   @Column()
-  tel:string;
+  tel: string;
 
-  @Column({type:'longtext'})
-  
-  avatar:string;
-  id: string;
+  @Column({ type: 'longtext' })
+  avatar: string;
 
-  async validatePassword(password:string):Promise<boolean>{
-    const hash = await bcrypt.hash(password,this.salt);
-    return hash===this.password;
-   }
+  async validatePassword(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
+    return hash === this.password;
+  }
 }
 @ChildEntity()
 export class Admin extends User {}
@@ -72,4 +69,3 @@ export class Employee extends User {
   @JoinColumn()
   conversation: Conversation;
 }
-
